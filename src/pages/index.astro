@@ -1,0 +1,300 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import AcquisitionCTA from '../components/AcquisitionCTA.astro';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+import { SITE } from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const siteEntry = await getEntry('site', 'default');
+if (!siteEntry) throw new Error('Site config missing');
+const siteConfig = siteEntry.data;
+
+const reasons = (await getCollection('reasons')).sort(
+  (a, b) => a.data.number - b.data.number,
+);
+---
+
+<BaseLayout>
+  <Nav />
+
+  <main>
+    <!-- HERO -->
+    <header class="hero-bg min-h-[100dvh] flex items-center pt-16 relative">
+      <div class="max-w-screen-2xl mx-auto px-8 pt-12 pb-20">
+        <div class="max-w-5xl">
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 mb-8">
+            <div class="flex items-center gap-x-1.5">
+              <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+              <span class="text-emerald-400 text-xs font-semibold tracking-[1.5px] uppercase">Premium .com • Available Now</span>
+            </div>
+          </div>
+
+          <div class="max-w-4xl">
+            <h1 class="font-display text-[4rem] md:text-[5.5rem] leading-[0.95] tracking-[-4px] font-extrabold mb-2">
+              Own the Brand<br />of the<br />
+              <span class="vibrant-gradient">Unbound Creator</span>
+            </h1>
+
+            <div class="flex items-baseline gap-x-3 mb-6">
+              <span class="font-mono text-3xl md:text-4xl text-cyan-400 font-semibold tracking-[-2px]">{SITE.name}</span>
+            </div>
+
+            <p class="max-w-2xl text-xl md:text-2xl text-slate-300 font-light tracking-tight leading-tight mb-10">
+              Starlink has made the entire planet a viable studio for intermedia artists. This domain captures the movement — and the mindset — at the perfect moment.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <AcquisitionCTA label="Inquire to Acquire" variant="accent" icon="fa-arrow-right-long" />
+            <a href="#reality" class="px-8 py-4 border border-white/30 hover:bg-white/5 active:bg-white/10 transition-all font-semibold text-lg rounded-3xl flex items-center justify-center gap-x-2 w-full sm:w-auto text-white no-underline">
+              <span>Discover the Vision</span>
+            </a>
+          </div>
+
+          <div class="mt-10 flex items-center gap-x-8 text-sm">
+            <div class="flex items-center gap-x-2 text-slate-400">
+              <i class="fa-solid fa-check text-emerald-400"></i>
+              <span>Premium brand asset</span>
+            </div>
+            <div class="flex items-center gap-x-2 text-slate-400">
+              <i class="fa-solid fa-check text-emerald-400"></i>
+              <span>Cultural inflection point</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden lg:block">
+        <div class="flex flex-col items-center text-xs tracking-[2px] text-slate-500">
+          <span>SCROLL TO EXPLORE</span>
+          <i class="fa-solid fa-chevron-down mt-1.5 animate-bounce"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- TRUST BAR -->
+    <div class="border-b border-slate-800 bg-slate-900/60 py-5">
+      <div class="max-w-screen-2xl mx-auto px-8">
+        <div class="flex flex-wrap justify-center md:justify-between items-center gap-x-8 gap-y-3 text-sm">
+          {
+            siteConfig.trustPoints.map((point) => (
+              <div class="flex items-center gap-x-2 text-slate-400">
+                <i class="fa-solid fa-circle-check text-cyan-400"></i>
+                <span class="font-medium">{point}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- THE NEW CREATIVE REALITY -->
+    <section id="reality" class="max-w-screen-2xl mx-auto px-8 pt-20 pb-16">
+      <div class="max-w-4xl mx-auto">
+        <div class="inline-block px-4 py-1 rounded-3xl bg-cyan-500/10 text-cyan-400 text-xs font-bold tracking-[2px] mb-6">THE NEW CREATIVE REALITY</div>
+        <h2 class="section-header tracking-[-2.5px] mb-8">Geography is no longer<br />a creative constraint.</h2>
+
+        <div class="prose prose-invert prose-lg max-w-none text-slate-300 space-y-5">
+          <p>
+            With Starlink's global satellite network now delivering reliable high-bandwidth connectivity to remote deserts, mountain ranges, oceans, and islands, the last major barrier for ambitious creators has fallen.
+          </p>
+          <p>
+            <strong class="text-white">Intermedia artists</strong> — those who fluidly combine video, sound, performance, code, generative systems, interactive installations, sculpture, and live digital experiences — no longer need to choose between artistic freedom and professional infrastructure. They can now create, collaborate in real time, render complex projects, stream high-quality work, and ship finished pieces from virtually anywhere on Earth.
+          </p>
+          <p>
+            A converted van in Patagonia. A sailboat in the Aegean. A desert camp in Namibia. A mountain residency above the clouds. The studio is now the planet.
+          </p>
+          <p class="text-2xl text-white font-display font-semibold tracking-tight pt-4">
+            The age of the <span class="vibrant-gradient">vibrant techno nomad</span> has begun.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE NAME THAT DEFINES THE MOVEMENT -->
+    <section id="name" class="bg-slate-900 border-y border-slate-800 py-20">
+      <div class="max-w-screen-2xl mx-auto px-8">
+        <div class="max-w-4xl mx-auto">
+          <div class="inline-block px-4 py-1 rounded-3xl bg-purple-500/10 text-purple-400 text-xs font-bold tracking-[2px] mb-6">THE NAME THAT DEFINES THE MOVEMENT</div>
+          <h2 class="section-header tracking-[-2.5px] mb-4">Three vivid words.<br />One unmistakable identity.</h2>
+          <p class="text-xl text-slate-400 mb-14 max-w-2xl">
+            <strong class="text-white">vibranttechnomad.com</strong> is more than available — it is the precise linguistic crystallization of this emerging archetype.
+          </p>
+
+          <!-- Word breakdown cards -->
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-slate-950 border border-slate-800 rounded-3xl p-8 reason-card">
+              <div class="w-12 h-12 flex items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400 mb-6">
+                <span class="text-2xl font-extrabold font-display">V</span>
+              </div>
+              <h3 class="font-semibold text-2xl tracking-tight mb-3 text-cyan-400">Vibrant</h3>
+              <p class="text-slate-400 leading-relaxed">Energy, color, life, and multisensory richness. Art that pulses with vitality rather than feeling sterile or purely algorithmic.</p>
+            </div>
+
+            <div class="bg-slate-950 border border-slate-800 rounded-3xl p-8 reason-card">
+              <div class="w-12 h-12 flex items-center justify-center rounded-2xl bg-purple-500/10 text-purple-400 mb-6">
+                <span class="text-2xl font-extrabold font-display">T</span>
+              </div>
+              <h3 class="font-semibold text-2xl tracking-tight mb-3 text-purple-400">Techno</h3>
+              <p class="text-slate-400 leading-relaxed">Deep fluency with the tools of now and tomorrow: AI co-creation, real-time rendering, spatial computing, hybrid physical-digital work, and cloud-native workflows.</p>
+            </div>
+
+            <div class="bg-slate-950 border border-slate-800 rounded-3xl p-8 reason-card">
+              <div class="w-12 h-12 flex items-center justify-center rounded-2xl bg-orange-500/10 text-orange-400 mb-6">
+                <span class="text-2xl font-extrabold font-display">N</span>
+              </div>
+              <h3 class="font-semibold text-2xl tracking-tight mb-3 text-orange-400">Nomad</h3>
+              <p class="text-slate-400 leading-relaxed">True location independence. The freedom to follow light, seasons, culture, and inspiration while remaining fully connected and productive.</p>
+            </div>
+          </div>
+
+          <p class="mt-10 text-center text-lg text-slate-400 max-w-2xl mx-auto">
+            Three vivid words fused into one memorable, brand-ready phrase. It tells the complete story the moment someone hears or reads it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY THIS DOMAIN COMMANDS PREMIUM VALUE -->
+    <section id="why" class="max-w-screen-2xl mx-auto px-8 pt-20 pb-16">
+      <div class="max-w-3xl mx-auto text-center mb-14">
+        <div class="inline-block px-4 py-1 rounded-3xl bg-cyan-500/10 text-cyan-400 text-xs font-bold tracking-[2px] mb-4">WHY THIS DOMAIN COMMANDS PREMIUM VALUE</div>
+        <h2 class="section-header tracking-[-2.5px]">A strategic brand asset,<br />not a generic domain.</h2>
+        <p class="mt-5 text-xl text-slate-400">Here's why it supports a high acquisition price.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {
+          reasons.map((reason) => (
+            <div class="reason-card bg-slate-900 border border-slate-800 rounded-3xl p-8 flex flex-col">
+              <div class="w-12 h-12 flex items-center justify-center rounded-2xl vibrant-glow bg-opacity-10 mb-6">
+                <span class="text-2xl font-extrabold font-display text-white">{String(reason.data.number).padStart(2, '0')}</span>
+              </div>
+              <h3 class="font-semibold text-xl tracking-tight mb-3">{reason.data.title}</h3>
+              <p class="text-slate-400 leading-relaxed flex-grow">{reason.data.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- IMAGINE WHAT YOU COULD BUILD -->
+    <section class="bg-slate-900 border-y border-slate-800 py-20">
+      <div class="max-w-screen-2xl mx-auto px-8">
+        <div class="max-w-3xl mx-auto text-center mb-14">
+          <div class="inline-block px-4 py-1 rounded-3xl bg-purple-500/10 text-purple-400 text-xs font-bold tracking-[2px] mb-4">IMAGINE WHAT YOU COULD BUILD</div>
+          <h2 class="section-header tracking-[-2.5px]">{SITE.name}<br />as the flagship for:</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {
+            siteConfig.useCaseCategories.map((useCase, i) => (
+              <div class="use-case-card bg-slate-950 border border-slate-800 hover:border-cyan-500/60 rounded-3xl p-8 flex flex-col">
+                <div class="flex items-center gap-x-4 mb-5">
+                  <div class="w-11 h-11 rounded-2xl vibrant-glow flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-lg">{i + 1}</span>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-lg tracking-tight">{useCase.title}</div>
+                  </div>
+                </div>
+                <p class="text-slate-400 flex-grow text-[15px] leading-relaxed">{useCase.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- THIS IS MORE THAN A DOMAIN -->
+    <section class="max-w-screen-2xl mx-auto px-8 py-20">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="mx-auto mb-8 inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 border border-white/10">
+          <i class="fa-solid fa-flag text-4xl vibrant-gradient"></i>
+        </div>
+
+        <h2 class="font-display text-5xl md:text-6xl tracking-[-2.5px] leading-none font-extrabold mb-6">
+          This Is More Than a Domain —<br />
+          <span class="vibrant-gradient">It's a Flag</span>
+        </h2>
+
+        <div class="prose prose-invert prose-lg max-w-2xl mx-auto text-slate-300 space-y-4">
+          <p>
+            In a digital landscape crowded with generic names and forgettable handles, <strong class="text-white">vibranttechnomad.com</strong> stands apart. It positions its owner as thoughtful, forward-leaning, and culturally fluent from the first impression.
+          </p>
+          <p>
+            Whether you are the artist ready to claim your identity at scale, the entrepreneur building the central platform for this movement, or the investor who recognizes long-term brand equity, this domain is ready to serve as the cornerstone.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACQUISITION SECTION -->
+    <section class="bg-slate-900 border-y border-slate-800 py-16">
+      <div class="max-w-screen-2xl mx-auto px-8">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-10">
+            <div class="inline-block px-5 py-1.5 rounded-3xl vibrant-glow text-white text-xs font-extrabold tracking-[1.5px] mb-4">ACQUISITION</div>
+            <h2 class="section-header tracking-[-2px]">Ready to claim the brand<br />of the unbound creator?</h2>
+          </div>
+
+          <div class="bg-slate-950 border border-slate-700 rounded-3xl p-10 md:p-14">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-y-8">
+              <div>
+                <div class="text-sm uppercase tracking-[3px] text-cyan-400 font-bold mb-2">Premium Strategic Asset</div>
+                <div class="flex items-baseline gap-x-2">
+                  <span class="text-5xl font-extrabold tabular-nums tracking-[-2px]">Price on Request</span>
+                </div>
+                <div class="text-sm text-slate-400 mt-1">One-time acquisition • Full ownership transfer</div>
+
+                <div class="mt-6 text-sm max-w-xs">
+                  <div class="flex items-center gap-x-2 text-emerald-400">
+                    <i class="fa-solid fa-check"></i>
+                    <span class="font-medium">Comparable premium brandable .com domains in emerging lifestyle + tech verticals command significant premiums</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="lg:text-right">
+                <AcquisitionCTA label="Submit Acquisition Inquiry" variant="accent" icon="fa-arrow-right-long" />
+                <div class="mt-4 text-xs text-slate-400">Serious buyers only • Escrow protected</div>
+              </div>
+            </div>
+
+            <div class="mt-10 pt-8 border-t border-slate-700 grid grid-cols-1 sm:grid-cols-3 gap-y-6 text-sm">
+              <div>
+                <div class="font-semibold mb-1 flex items-center gap-x-2"><i class="fa-solid fa-handshake text-cyan-400"></i> <span>Transaction</span></div>
+                <div class="text-slate-400">Handled via Escrow.com or your preferred platform. Full domain push + DNS control transfer.</div>
+              </div>
+              <div>
+                <div class="font-semibold mb-1 flex items-center gap-x-2"><i class="fa-solid fa-file-contract text-cyan-400"></i> <span>Confidential</span></div>
+                <div class="text-slate-400">All inquiries are handled confidentially. Pricing reflects brand strength, keyword alignment, cultural timing, versatility, and long-term appreciation potential.</div>
+              </div>
+              <div>
+                <div class="font-semibold mb-1 flex items-center gap-x-2"><i class="fa-solid fa-globe text-cyan-400"></i> <span>Why Now?</span></div>
+                <div class="text-slate-400">The brands that claim clear, ownable language around the Starlink × creator economy convergence now will hold mindshare for years.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <div class="bg-gradient-to-b from-slate-900 to-slate-950 py-16">
+      <div class="max-w-screen-2xl mx-auto px-8 text-center">
+        <div class="max-w-lg mx-auto">
+          <h3 class="font-display text-5xl tracking-[-2px] font-extrabold mb-4">The studio<br />is now the planet.</h3>
+          <p class="text-xl text-slate-300 mb-8">Claim the name that defines the movement.</p>
+
+          <AcquisitionCTA label="Inquire to Acquire" variant="accent" />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer disclaimer={siteConfig.disclaimer} />
+</BaseLayout>

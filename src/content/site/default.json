@@ -1,0 +1,35 @@
+{
+  "disclaimer": "This website is for demonstration and informational purposes only. It does not constitute an offer of services, a commitment to deploy, or a guarantee of outcomes. All statistics, projections, and references to specific technologies are based on publicly available information as of the date shown and are subject to change.",
+  "trustPoints": [
+    "Premium brandable .com domain",
+    "Positioned at Starlink × creator economy convergence",
+    "Escrow.com protected transfer",
+    "Instant authority & cultural fluency"
+  ],
+  "useCaseCategories": [
+    {
+      "title": "Personal Brand & Portfolio",
+      "description": "A traveling intermedia artist's flagship identity — stunning visual storytelling and behind-the-scenes documentation of art created in extraordinary locations."
+    },
+    {
+      "title": "Content Platform & Publication",
+      "description": "The definitive resource library for nomadic creators: gear guides, Starlink/mobile studio setups, workflows, and legal/tax frameworks."
+    },
+    {
+      "title": "Community Hub & Membership",
+      "description": "A curated global community of like-minded artists with virtual salons, real-world gatherings, and collaborative opportunities."
+    },
+    {
+      "title": "Agency & Consultancy",
+      "description": "Helping creatives build nomadic practices — from connectivity setups to hybrid art techniques and cloud-native workflows."
+    },
+    {
+      "title": "Education & Courses",
+      "description": "Online programs covering mobile studios, satellite connectivity, hybrid art techniques, and the business of location-independent creativity."
+    },
+    {
+      "title": "E-Commerce & Experiences",
+      "description": "Tools, limited art drops, festival experiences, residencies — an experiential brand at the intersection of art and technology."
+    }
+  ]
+}

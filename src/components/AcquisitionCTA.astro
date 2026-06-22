@@ -1,0 +1,28 @@
+---
+import { ACQUISITION_MAILTO } from '../consts';
+
+interface Props {
+  label: string;
+  variant?: 'accent' | 'outline' | 'white';
+  class?: string;
+  icon?: string;
+}
+
+const { label, variant = 'accent', class: className = '', icon } = Astro.props;
+
+const baseClasses = 'inline-flex items-center justify-center gap-x-3 px-9 py-4 font-semibold text-lg rounded-3xl transition-all group no-underline';
+
+const variantClasses: Record<string, string> = {
+  accent: 'vibrant-glow hover:brightness-110 active:brightness-95 text-white shadow-xl shadow-cyan-500/25 w-full sm:w-auto',
+  outline: 'border border-white/30 hover:bg-white/5 active:bg-white/10 text-white w-full sm:w-auto',
+  white: 'bg-white text-slate-950 hover:bg-cyan-50 active:bg-white shadow-xl w-full sm:w-auto',
+};
+---
+
+<a
+  href={ACQUISITION_MAILTO}
+  class={`${baseClasses} ${variantClasses[variant] || variantClasses.accent} ${className}`}
+>
+  <span>{label}</span>
+  {icon && <i class={`fa-solid ${icon} group-active:scale-95 transition-transform`}></i>}
+</a>

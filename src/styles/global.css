@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #06b6d4;
+    --accent: #a855f7;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-200 antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .section-header {
+    @apply text-[3.25rem] leading-[1.05] font-bold tracking-[-0.04em];
+  }
+
+  .vibrant-gradient {
+    background: linear-gradient(135deg, #06b6d4 0%, #a855f7 50%, #f97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .vibrant-glow {
+    background: linear-gradient(135deg, #06b6d4 0%, #a855f7 100%);
+  }
+
+  .nav-scrolled {
+    background-color: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(20px);
+  }
+
+  .nav-link {
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: #06b6d4;
+  }
+
+  .hero-bg {
+    background-image: linear-gradient(rgba(2, 6, 23, 0.65), rgba(2, 6, 23, 0.88)), url('https://imagedelivery.net/-sPAUAWeA405NiWJ0SNIQA/101630a5-991e-4322-449f-4aba66df9400/public');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  .reason-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .reason-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+    border-color: rgba(6, 182, 212, 0.5);
+  }
+
+  .use-case-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .use-case-card:hover {
+    transform: translateY(-4px);
+    border-color: #06b6d4;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+  }
+
+  .stat-number {
+    font-variant-numeric: tabular-nums;
+  }
+}
