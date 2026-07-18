@@ -1,4 +1,4 @@
-name = "vibranttechnomad-com"
+name = "vibranttechnomadcomv1"
 main = "src/_worker.ts"
 compatibility_date = "2026-06-01"
 
