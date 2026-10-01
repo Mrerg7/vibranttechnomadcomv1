@@ -2,11 +2,11 @@
 import { ACQUISITION_MAILTO } from '../consts';
 ---
 
-<nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-slate-800">
+<nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-slate-800" aria-label="Primary">
   <div class="max-w-screen-2xl mx-auto">
     <div class="px-8 py-5 flex items-center justify-between">
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-x-3 no-underline">
+      <a href="/" class="flex items-center gap-x-3 no-underline min-h-[48px]" aria-label="vibranttechnomad.com home">
         <div class="w-9 h-9 vibrant-glow rounded-2xl flex items-center justify-center shadow-inner">
           <i class="fa-solid fa-globe text-white text-lg"></i>
         </div>
@@ -18,26 +18,37 @@ import { ACQUISITION_MAILTO } from '../consts';
 
       <!-- Desktop Nav -->
       <div class="hidden md:flex items-center gap-x-9 text-sm font-medium">
-        <a href="#reality" class="nav-link text-slate-300 hover:text-white no-underline">The Reality</a>
-        <a href="#name" class="nav-link text-slate-300 hover:text-white no-underline">The Name</a>
-        <a href="#why" class="nav-link text-slate-300 hover:text-white no-underline">Why Premium</a>
-        <a href="#acquire" class="nav-link text-slate-300 hover:text-white no-underline">Acquire</a>
+        <a href="/#reality" class="nav-link text-slate-300 hover:text-white no-underline min-h-[48px] inline-flex items-center">The Reality</a>
+        <a href="/#name" class="nav-link text-slate-300 hover:text-white no-underline min-h-[48px] inline-flex items-center">The Name</a>
+        <a href="/#why" class="nav-link text-slate-300 hover:text-white no-underline min-h-[48px] inline-flex items-center">Why Premium</a>
+        <a href="/faq/" class="nav-link text-slate-300 hover:text-white no-underline min-h-[48px] inline-flex items-center">FAQ</a>
+        <a href="/valuation/" class="nav-link text-slate-300 hover:text-white no-underline min-h-[48px] inline-flex items-center">Valuation</a>
       </div>
 
       <!-- CTA Buttons -->
       <div class="flex items-center gap-x-3">
-        <a href="#acquire"
-           class="hidden sm:inline-block px-5 py-2.5 text-sm font-semibold rounded-3xl border border-slate-700 hover:bg-slate-900 transition-colors text-slate-300 no-underline">
+        <!-- Dark/light toggle -->
+        <button
+          id="theme-toggle"
+          type="button"
+          class="w-12 h-12 flex items-center justify-center rounded-2xl border border-slate-700 text-slate-300 hover:bg-slate-900 transition-colors bg-transparent cursor-pointer"
+          aria-label="Toggle light and dark mode"
+          aria-pressed="false"
+        >
+          <i class="fa-solid fa-circle-half-stroke text-lg" aria-hidden="true"></i>
+        </button>
+        <a href="/#acquire"
+           class="hidden sm:inline-flex items-center px-5 py-2.5 min-h-[48px] text-sm font-semibold rounded-3xl border border-slate-700 hover:bg-slate-900 transition-colors text-slate-300 no-underline">
           Acquisition
         </a>
-        <a href={ACQUISITION_MAILTO}
-           class="px-6 py-2.5 vibrant-glow hover:brightness-110 active:brightness-95 transition-all text-white text-sm font-semibold rounded-3xl flex items-center gap-x-2 shadow-lg shadow-cyan-500/25 no-underline">
+        <a href={ACQUISITION_MAILTO} data-track="nav-inquire"
+           class="px-6 py-2.5 min-h-[48px] inline-flex items-center vibrant-glow hover:brightness-110 active:brightness-95 transition-all text-white text-sm font-semibold rounded-3xl flex items-center gap-x-2 shadow-lg shadow-cyan-500/25 no-underline">
           <span>Inquire Now</span>
           <i class="fa-solid fa-arrow-right text-xs"></i>
         </a>
 
-        <!-- Mobile Menu Button -->
-        <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center text-slate-400 hover:text-white bg-transparent border-0 cursor-pointer" aria-label="Menu">
+        <!-- Mobile Menu Button (48px target) -->
+        <button id="mobile-menu-btn" class="md:hidden w-12 h-12 flex items-center justify-center text-slate-400 hover:text-white bg-transparent border-0 cursor-pointer" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <i class="fa-solid fa-bars text-xl"></i>
         </button>
       </div>
@@ -55,37 +66,67 @@ import { ACQUISITION_MAILTO } from '../consts';
     }
   });
 
+  // Theme toggle (persisted, free, no FOUC — init in <head>)
+  const themeBtn = document.getElementById('theme-toggle');
+  const syncThemeBtn = () => {
+    const isLight = document.documentElement.classList.contains('light');
+    themeBtn?.setAttribute('aria-pressed', String(isLight));
+  };
+  syncThemeBtn();
+  themeBtn?.addEventListener('click', () => {
+    const isLight = document.documentElement.classList.toggle('light');
+    try {
+      localStorage.setItem('vtn-theme', isLight ? 'light' : 'dark');
+    } catch (e) {}
+    syncThemeBtn();
+  });
+
   const mobileBtn = document.getElementById('mobile-menu-btn');
   if (mobileBtn) {
     mobileBtn.addEventListener('click', () => {
       const navLinks = document.createElement('div');
+      navLinks.id = 'mobile-menu';
+      navLinks.setAttribute('role', 'dialog');
+      navLinks.setAttribute('aria-label', 'Site menu');
       navLinks.className = 'fixed inset-0 bg-slate-950/95 z-[90] flex flex-col p-8 pt-20 text-xl';
       navLinks.innerHTML = `
-        <button class="absolute top-6 right-8 text-3xl text-slate-400 bg-transparent border-0 cursor-pointer">&times;</button>
-        <a href="#reality" class="py-4 border-b border-slate-800 text-slate-200 no-underline">The Reality</a>
-        <a href="#name" class="py-4 border-b border-slate-800 text-slate-200 no-underline">The Name</a>
-        <a href="#why" class="py-4 border-b border-slate-800 text-slate-200 no-underline">Why Premium</a>
-        <a href="#acquire" class="py-4 border-b border-slate-800 text-slate-200 no-underline">Acquire</a>
+        <button class="absolute top-6 right-8 w-12 h-12 text-3xl text-slate-400 bg-transparent border-0 cursor-pointer" aria-label="Close menu">&times;</button>
+        <a href="/#reality" class="py-4 min-h-[48px] border-b border-slate-800 text-slate-200 no-underline">The Reality</a>
+        <a href="/#name" class="py-4 min-h-[48px] border-b border-slate-800 text-slate-200 no-underline">The Name</a>
+        <a href="/#why" class="py-4 min-h-[48px] border-b border-slate-800 text-slate-200 no-underline">Why Premium</a>
+        <a href="/faq/" class="py-4 min-h-[48px] border-b border-slate-800 text-slate-200 no-underline">FAQ</a>
+        <a href="/valuation/" class="py-4 min-h-[48px] border-b border-slate-800 text-slate-200 no-underline">Valuation</a>
+        <a href="/contact/" class="py-4 min-h-[48px] border-b border-slate-800 text-slate-200 no-underline">Contact</a>
         <div class="pt-8">
           <a href="${document.querySelector('a[href^="mailto:"]')?.getAttribute('href') || '#'}"
-             class="block w-full py-4 vibrant-glow text-white rounded-3xl font-semibold text-center no-underline">
+             class="flex w-full py-4 min-h-[48px] items-center justify-center vibrant-glow text-white rounded-3xl font-semibold text-center no-underline">
             Inquire to Acquire
           </a>
         </div>
       `;
       document.body.appendChild(navLinks);
+      mobileBtn.setAttribute('aria-expanded', 'true');
 
-      navLinks.querySelector('button')!.addEventListener('click', () => {
-        document.body.removeChild(navLinks);
-      });
+      const close = () => {
+        if (document.body.contains(navLinks)) document.body.removeChild(navLinks);
+        mobileBtn.setAttribute('aria-expanded', 'false');
+      };
+
+      navLinks.querySelector('button')!.addEventListener('click', close);
 
       navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
-          setTimeout(() => {
-            if (document.body.contains(navLinks)) document.body.removeChild(navLinks);
-          }, 300);
+          setTimeout(close, 300);
         });
       });
+      // Escape to close
+      const onKey = (ev) => {
+        if (ev.key === 'Escape') {
+          close();
+          document.removeEventListener('keydown', onKey);
+        }
+      };
+      document.addEventListener('keydown', onKey);
     });
   }
 </script>

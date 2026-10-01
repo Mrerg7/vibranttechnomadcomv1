@@ -1,0 +1,52 @@
+---
+import AcquisitionCTA from '../../components/AcquisitionCTA.astro';
+import Footer from '../../components/Footer.astro';
+import Nav from '../../components/Nav.astro';
+import { MAKE_OFFER_MAILTO, SITE } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const siteEntry = await getEntry('site', 'default');
+const disclaimer = siteEntry?.data.disclaimer ?? '';
+
+const faqs = [
+  { q: 'How much is vibranttechnomad.com?', a: 'Asking $27,500 USD. Escrow.com (or your preferred licensed escrow) holds funds until you confirm receipt. Submit via Buy Now, Make Offer, or the contact form.' },
+  { q: 'How fast is transfer?', a: 'Typically 1–3 business days after escrow clears: domain push to your registrar + full DNS control + written confirmation.' },
+  { q: 'Can I pay via Escrow.com?', a: 'Yes — recommended. Funds stay locked until transfer is verified. No release to seller before you confirm.' },
+  { q: 'Can I make an offer?', a: 'Yes. Include USD price, timeline, and preferred escrow. Serious offers get a direct confidential reply.' },
+  { q: 'What can I build with it?', a: 'Personal brand, content publication, community/membership, agency, courses, e-commerce/experiences — see the valuation guide for six modeled use cases.' },
+  { q: 'Is it good for SEO?', a: 'As a brandable .com it earns recall + word-of-mouth. It aligns with rising queries like “techno nomad”, “digital nomad artist”, “Starlink creator”, and “intermedia art”.' },
+  { q: 'Why buy a premium domain instead of a cheap alternative?', a: 'Ownable .coms reduce explanation cost, increase trust, and hold resale value. Descriptive + emotional resonance in a growing vertical is the investment-grade combination.' },
+  { q: 'Who do I contact?', a: `Direct: ${SITE.acquisitionEmail}. Use the contact page form or email CTA — all inquiries confidential.` },
+];
+---
+
+<BaseLayout
+  title={`FAQ — ${SITE.name} for Sale | Price, Escrow & Transfer`}
+  description={`Buyer FAQ for ${SITE.name}: $27,500 asking, Escrow.com transfer in 1–3 days, how to make an offer, SEO value, and what to build. Premium domain for sale.`}
+>
+  <Nav />
+  <main id="main" class="pt-32 pb-20 max-w-3xl mx-auto px-8">
+    <p class="text-xs font-bold tracking-[2px] text-cyan-400 uppercase">Buyer FAQ</p>
+    <h1 class="font-display text-4xl md:text-5xl font-extrabold tracking-tight mt-3">vibranttechnomad.com — FAQ</h1>
+    <p class="mt-4 text-lg text-slate-400">
+      Asking <strong class="text-white">{SITE.priceDisplay}</strong> · Escrow protected · <a href="/valuation/" class="text-cyan-400 underline underline-offset-4">Valuation guide</a> · <a href="/contact/" class="text-cyan-400 underline underline-offset-4">Contact</a>
+    </p>
+    <div class="mt-10 space-y-4">
+      {faqs.map((f) => (
+        <details class="bg-slate-900 border border-slate-800 rounded-2xl px-6 py-5 open:border-cyan-500/50">
+          <summary class="cursor-pointer min-h-[48px] flex items-center justify-between gap-4 font-semibold text-lg text-white list-none">
+            <span>{f.q}</span>
+            <i class="fa-solid fa-chevron-down text-cyan-400 text-sm" aria-hidden="true" />
+          </summary>
+          <p class="mt-3 text-slate-400 leading-relaxed">{f.a}</p>
+        </details>
+      ))}
+    </div>
+    <div class="mt-10 flex flex-col sm:flex-row gap-4">
+      <AcquisitionCTA label="Buy Now — $27,500" variant="accent" icon="fa-bolt" track="faq-buy-now" />
+      <AcquisitionCTA label="Make Offer" variant="outline" icon="fa-handshake" track="faq-make-offer" href={MAKE_OFFER_MAILTO} />
+    </div>
+  </main>
+  <Footer disclaimer={disclaimer} />
+</BaseLayout>

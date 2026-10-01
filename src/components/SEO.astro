@@ -17,6 +17,9 @@ const canonical = new URL(path, SITE.url).href;
 
 const OG_IMAGE = `https://imagedelivery.net/-sPAUAWeA405NiWJ0SNIQA/101630a5-991e-4322-449f-4aba66df9400/public`;
 
+const keywords =
+  'buy premium domain, vibranttechnomad.com for sale, premium domain names, investment domains, brandable .com domains, techno nomad domain, digital nomad brand, creator economy domain';
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -114,6 +117,74 @@ const jsonLd = [
       availableLanguage: 'English',
     },
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'How much is vibranttechnomad.com?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'The asking price is $27,500 USD with transfer via Escrow.com or your preferred licensed escrow service. Serious offers are reviewed confidentially.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How does the domain transfer work?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'After payment clears escrow, the domain is pushed to your registrar account with full DNS control, typically within 1–3 business days.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can I make an offer below asking price?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. Use the Make Offer button to submit your price and timeline. All serious inquiries receive a direct, confidential response.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Why is this domain valuable?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'It is a brandable .com at the convergence of the creator economy, intermedia art, and global Starlink connectivity — memorable, discoverable, and versatile across personal brand, media, community, education, and commerce uses.',
+        },
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: SITE.url,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'FAQ',
+        item: `${SITE.url}/faq/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'Valuation',
+        item: `${SITE.url}/valuation/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: 'Contact',
+        item: `${SITE.url}/contact/`,
+      },
+    ],
+  },
 ];
 ---
 
@@ -122,9 +193,35 @@ const jsonLd = [
 <link rel="canonical" href={canonical} />
 <title>{title}</title>
 <meta name="description" content={description} />
-<meta name="robots" content="index, follow" />
-<meta name="theme-color" content="#020617" />
+<meta name="keywords" content={keywords} />
+<meta name="author" content="Desert Rich" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#020617" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 <meta name="google-site-verification" content="KwIQtgk9y2_BjmaP_JHJN24yGb47RofAOnF2UvMZsW0" />
+
+<!-- Performance: preconnect + font preload (no render-blocking @import) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="dns-prefetch" href="https://imagedelivery.net" />
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+  media="print"
+  onload="this.media='all'"
+/>
+<noscript>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+  />
+</noscript>
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content={SITE.name} />
@@ -145,11 +242,28 @@ const jsonLd = [
 <meta name="twitter:image:alt" content={`${SITE.name} — Premium domain for the intermedia artist era`} />
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<!-- Font Awesome deferred: non-blocking, preloaded -->
+<link
+  rel="preload"
+  as="style"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   crossorigin="anonymous"
   referrerpolicy="no-referrer"
+  media="print"
+  onload="this.media='all'"
 />
+<noscript>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+</noscript>
 
 <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

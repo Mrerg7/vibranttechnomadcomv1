@@ -6,11 +6,15 @@ interface Props {
   variant?: 'accent' | 'outline' | 'white';
   class?: string;
   icon?: string;
+  track?: string;
+  href?: string;
 }
 
-const { label, variant = 'accent', class: className = '', icon } = Astro.props;
+const { label, variant = 'accent', class: className = '', icon, track = 'acquire', href } = Astro.props;
 
-const baseClasses = 'inline-flex items-center justify-center gap-x-3 px-9 py-4 font-semibold text-lg rounded-3xl transition-all group no-underline';
+const resolvedHref = href ?? ACQUISITION_MAILTO;
+
+const baseClasses = 'inline-flex items-center justify-center gap-x-3 px-9 py-4 min-h-[48px] font-semibold text-lg rounded-3xl transition-all group no-underline';
 
 const variantClasses: Record<string, string> = {
   accent: 'vibrant-glow hover:brightness-110 active:brightness-95 text-white shadow-xl shadow-cyan-500/25 w-full sm:w-auto',
@@ -20,9 +24,10 @@ const variantClasses: Record<string, string> = {
 ---
 
 <a
-  href={ACQUISITION_MAILTO}
+  href={resolvedHref}
+  data-track={track}
   class={`${baseClasses} ${variantClasses[variant] || variantClasses.accent} ${className}`}
 >
   <span>{label}</span>
-  {icon && <i class={`fa-solid ${icon} group-active:scale-95 transition-transform`}></i>}
+  {icon && <i class={`fa-solid ${icon} group-active:scale-95 transition-transform`} aria-hidden="true"></i>}
 </a>

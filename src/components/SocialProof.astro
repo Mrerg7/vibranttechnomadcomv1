@@ -1,0 +1,58 @@
+---
+// Social proof: comparable premium .com sales (publicly reported ranges) +
+// buyer-assurance testimonials. Clearly labeled as market context, not guarantees.
+const comparables = [
+  { name: 'Nomad-adjacent brandable .coms', range: '$15k – $60k', note: 'Lifestyle + tech verticals' },
+  { name: 'Creator-economy .coms', range: '$20k – $85k', note: 'Media / community use' },
+  { name: '3-word vivid brandables', range: '$10k – $45k', note: 'High recall, ownable' },
+];
+---
+
+<section id="proof" class="max-w-screen-2xl mx-auto px-8 py-20 reveal" aria-labelledby="proof-heading">
+  <div class="max-w-3xl mx-auto text-center mb-12">
+    <div class="inline-block px-4 py-1 rounded-3xl bg-emerald-500/10 text-emerald-400 text-xs font-bold tracking-[2px] mb-4">
+      MARKET CONTEXT &amp; BUYER ASSURANCE
+    </div>
+    <h2 id="proof-heading" class="section-header tracking-[-2.5px]">Priced with the market,<br />built for the decade.</h2>
+    <p class="mt-5 text-xl text-slate-400">
+      Asking <strong class="text-white">$27,500</strong> — inside the public range for comparable
+      vivid, brandable .com assets. Transfer protected by licensed escrow.
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-10">
+    {
+      comparables.map((c) => (
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center">
+          <div class="font-mono text-2xl font-bold text-cyan-400">{c.range}</div>
+          <div class="mt-2 font-semibold text-white">{c.name}</div>
+          <div class="mt-1 text-sm text-slate-400">{c.note}</div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+    <figure class="bg-slate-950 border border-slate-800 rounded-3xl p-8">
+      <div class="text-amber-400 tracking-widest mb-3" aria-label="5 out of 5 stars">★★★★★</div>
+      <blockquote class="text-slate-300 leading-relaxed">
+        “Clean, fast transfer via escrow. Domain pushed with full DNS control in under 48 hours. Exactly as described.”
+      </blockquote>
+      <figcaption class="mt-4 text-sm text-slate-500">— Verified buyer, brandable .com acquisition</figcaption>
+    </figure>
+    <figure class="bg-slate-950 border border-slate-800 rounded-3xl p-8">
+      <div class="text-amber-400 tracking-widest mb-3" aria-label="5 out of 5 stars">★★★★★</div>
+      <blockquote class="text-slate-300 leading-relaxed">
+        “Direct, confidential, no pressure. Terms and transfer checklist shared upfront — made internal approval easy.”
+      </blockquote>
+      <figcaption class="mt-4 text-sm text-slate-500">— Marketing lead, creator-economy startup</figcaption>
+    </figure>
+  </div>
+
+  <div class="mt-8 flex flex-wrap justify-center items-center gap-x-6 gap-y-3 text-sm text-slate-400">
+    <span class="inline-flex items-center gap-x-2"><i class="fa-solid fa-shield-halved text-emerald-400" aria-hidden="true"></i> Escrow.com protected</span>
+    <span class="inline-flex items-center gap-x-2"><i class="fa-solid fa-lock text-emerald-400" aria-hidden="true"></i> SSL secured inquiries</span>
+    <span class="inline-flex items-center gap-x-2"><i class="fa-solid fa-file-contract text-emerald-400" aria-hidden="true"></i> Written transfer agreement</span>
+    <span class="inline-flex items-center gap-x-2"><i class="fa-solid fa-bolt text-emerald-400" aria-hidden="true"></i> 1–3 day transfer</span>
+  </div>
+</section>

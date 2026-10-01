@@ -1,0 +1,113 @@
+---
+import Footer from '../../components/Footer.astro';
+import Nav from '../../components/Nav.astro';
+import { ACQUISITION_MAILTO, MAKE_OFFER_MAILTO, SITE } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const siteEntry = await getEntry('site', 'default');
+const disclaimer = siteEntry?.data.disclaimer ?? '';
+---
+
+<BaseLayout
+  title={`Contact — Acquire ${SITE.name} | ${SITE.priceDisplay} via Escrow`}
+  description={`Contact to acquire ${SITE.name} for ${SITE.priceDisplay}. Confidential inquiries, Make Offer with price + timeline, Escrow.com protected transfer in 1–3 days.`}
+>
+  <Nav />
+  <main id="main" class="pt-32 pb-20 max-w-3xl mx-auto px-8">
+    <p class="text-xs font-bold tracking-[2px] text-cyan-400 uppercase">Direct acquisition</p>
+    <h1 class="font-display text-4xl md:text-5xl font-extrabold tracking-tight mt-3">Acquire {SITE.name}</h1>
+    <p class="mt-4 text-lg text-slate-400">
+      Asking <strong class="text-white">{SITE.priceDisplay}</strong> · Confidential · Escrow protected ·
+      <a href={ACQUISITION_MAILTO} class="font-mono text-cyan-300 underline underline-offset-4">{SITE.acquisitionEmail}</a>
+    </p>
+
+    <div class="mt-8 grid sm:grid-cols-3 gap-3">
+      <a href={ACQUISITION_MAILTO} data-track="contact-buy-now" class="min-h-[48px] inline-flex items-center justify-center rounded-3xl bg-gradient-to-r from-cyan-500 to-purple-500 px-6 py-3 font-semibold text-white no-underline hover:brightness-110">Buy Now</a>
+      <a href={MAKE_OFFER_MAILTO} data-track="contact-make-offer" class="min-h-[48px] inline-flex items-center justify-center rounded-3xl border border-slate-700 px-6 py-3 font-semibold text-white no-underline hover:bg-slate-900">Make Offer</a>
+      <a href="/faq/" data-track="contact-faq" class="min-h-[48px] inline-flex items-center justify-center rounded-3xl border border-slate-700 px-6 py-3 font-semibold text-slate-300 no-underline hover:bg-slate-900">Read FAQ</a>
+    </div>
+
+    <!-- Inquiry form → free serverless endpoint /api/inquiry (Worker) with mailto fallback -->
+    <form id="inquiry-form" class="mt-10 bg-slate-900 border border-slate-800 rounded-3xl p-8 space-y-5" novalidate>
+      <div>
+        <label for="name" class="block text-sm font-semibold text-white mb-2">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required minlength="2" placeholder="Jane Creator"
+          class="w-full rounded-2xl bg-slate-950 border border-slate-700 px-5 py-3 min-h-[48px] text-white placeholder:text-slate-500 focus:border-cyan-500" />
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-semibold text-white mb-2">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@studio.com"
+          class="w-full rounded-2xl bg-slate-950 border border-slate-700 px-5 py-3 min-h-[48px] text-white placeholder:text-slate-500 focus:border-cyan-500" />
+      </div>
+      <div>
+        <label for="offer" class="block text-sm font-semibold text-white mb-2">Offer (USD) or “Buy Now”</label>
+        <input id="offer" name="offer" type="text" inputmode="numeric" placeholder="27500"
+          class="w-full rounded-2xl bg-slate-950 border border-slate-700 px-5 py-3 min-h-[48px] text-white placeholder:text-slate-500 focus:border-cyan-500" />
+      </div>
+      <div>
+        <label for="message" class="block text-sm font-semibold text-white mb-2">Message</label>
+        <textarea id="message" name="message" rows="5" required minlength="10" placeholder="Timeline, escrow preference, intended use…"
+          class="w-full rounded-2xl bg-slate-950 border border-slate-700 px-5 py-3 text-white placeholder:text-slate-500 focus:border-cyan-500"></textarea>
+      </div>
+      <p id="form-status" class="hidden text-sm rounded-2xl px-5 py-3" role="status" aria-live="polite"></p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button type="submit" data-track="contact-submit" class="min-h-[48px] flex-1 rounded-3xl bg-gradient-to-r from-cyan-500 to-purple-500 px-8 py-4 font-semibold text-white hover:brightness-110 cursor-pointer border-0">
+          Send inquiry
+        </button>
+        <a href={ACQUISITION_MAILTO} class="min-h-[48px] inline-flex items-center justify-center rounded-3xl border border-slate-700 px-8 py-4 font-semibold text-slate-300 no-underline hover:bg-slate-800">Use email instead</a>
+      </div>
+      <p class="text-xs text-slate-500">Confidential. No spam. Escrow.com recommended. By sending you agree to be contacted about this acquisition.</p>
+    </form>
+  </main>
+  <Footer disclaimer={disclaimer} />
+
+  <script is:inline>
+    (function () {
+      var form = document.getElementById('inquiry-form');
+      var status = document.getElementById('form-status');
+      if (!form || !status) return;
+      var show = function (msg, ok) {
+        status.textContent = msg;
+        status.classList.remove('hidden');
+        status.style.background = ok ? 'rgba(16,185,129,0.12)' : 'rgba(244,63,94,0.12)';
+        status.style.color = ok ? '#6ee7b7' : '#fda4af';
+        status.style.border = '1px solid ' + (ok ? 'rgba(16,185,129,0.4)' : 'rgba(244,63,94,0.4)');
+      };
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var data = {
+          name: form.name.value.trim(),
+          email: form.email.value.trim(),
+          offer: form.offer.value.trim(),
+          message: form.message.value.trim(),
+          page: location.pathname,
+        };
+        if (data.name.length < 2 || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email) || data.message.length < 10) {
+          show('Please add your name, a valid email, and a message (10+ characters).', false);
+          return;
+        }
+        show('Sending…', true);
+        try {
+          var res = await fetch('/api/inquiry', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (res.ok) {
+            show('Received — check your inbox for a confirmation. For fastest close, email sales@desertrich.com with “Buy Now — $27,500”.', true);
+            form.reset();
+          } else {
+            throw new Error('bad status');
+          }
+        } catch (err) {
+          // Fallback: open prefilled email (works with zero backend)
+          var subject = encodeURIComponent('vibranttechnomad.com — Inquiry from ' + data.name);
+          var body = encodeURIComponent('Name: ' + data.name + '\nEmail: ' + data.email + '\nOffer: ' + data.offer + '\n\n' + data.message);
+          window.location.href = 'mailto:sales@desertrich.com?subject=' + subject + '&body=' + body;
+          show('Backend unavailable — opening your email app with the inquiry prefilled.', true);
+        }
+      });
+    })();
+  </script>
+</BaseLayout>

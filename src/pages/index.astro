@@ -1,9 +1,13 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import AcquisitionCTA from '../components/AcquisitionCTA.astro';
+import DomainMockup from '../components/DomainMockup.astro';
+import ExitIntent from '../components/ExitIntent.astro';
+import FaqSection from '../components/FaqSection.astro';
 import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
-import { SITE } from '../consts';
+import SocialProof from '../components/SocialProof.astro';
+import { MAKE_OFFER_MAILTO, SITE } from '../consts';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const siteEntry = await getEntry('site', 'default');
@@ -18,51 +22,68 @@ const reasons = (await getCollection('reasons')).sort(
 <BaseLayout>
   <Nav />
 
-  <main>
+  <main id="main">
     <!-- HERO -->
     <header class="hero-bg min-h-[100dvh] flex items-center pt-16 relative">
-      <div class="max-w-screen-2xl mx-auto px-8 pt-12 pb-20">
+      <div class="max-w-screen-2xl mx-auto px-8 pt-12 pb-20 w-full">
+        <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
         <div class="max-w-5xl">
-          <!-- Badge -->
-          <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 mb-8">
+          <!-- Badge with urgency -->
+          <div class="hero-animate inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 mb-8">
             <div class="flex items-center gap-x-1.5">
-              <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-              <span class="text-emerald-400 text-xs font-semibold tracking-[1.5px] uppercase">Premium .com • Available Now</span>
+              <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" aria-hidden="true"></div>
+              <span class="text-emerald-400 text-xs font-semibold tracking-[1.5px] uppercase">Premium .com • Available Now • <span data-viewers>18</span> viewing</span>
             </div>
           </div>
 
           <div class="max-w-4xl">
-            <h1 class="font-display text-[4rem] md:text-[5.5rem] leading-[0.95] tracking-[-4px] font-extrabold mb-2">
+            <h1 class="hero-animate-2 font-display text-[2.75rem] md:text-[4.5rem] leading-[1.0] tracking-[-2px] font-extrabold mb-4">
+              <span class="font-mono block text-[1.6rem] md:text-[2rem] text-cyan-400 font-semibold tracking-[-1px] mb-3">{SITE.name}</span>
               Own the Brand<br />of the<br />
               <span class="vibrant-gradient">Unbound Creator</span>
             </h1>
 
-            <div class="flex items-baseline gap-x-3 mb-6">
-              <span class="font-mono text-3xl md:text-4xl text-cyan-400 font-semibold tracking-[-2px]">{SITE.name}</span>
-            </div>
-
-            <p class="max-w-2xl text-xl md:text-2xl text-slate-300 font-light tracking-tight leading-tight mb-10">
+            <p class="hero-animate-3 max-w-2xl text-xl md:text-2xl text-slate-300 font-light tracking-tight leading-tight mb-6">
               Starlink has made the entire planet a viable studio for intermedia artists. This domain captures the movement — and the mindset — at the perfect moment.
             </p>
+
+            <!-- Above-the-fold price + multi-CTA -->
+            <div class="hero-animate-3 flex flex-wrap items-center gap-x-6 gap-y-3 mb-8">
+              <div class="flex items-baseline gap-x-2">
+                <span class="text-4xl font-extrabold tabular-nums tracking-tight text-white">{SITE.priceDisplay}</span>
+                <span class="text-sm text-slate-400">asking • escrow protected</span>
+              </div>
+              <div class="flex items-center gap-x-2 text-sm text-slate-400">
+                <i class="fa-solid fa-shield-halved text-emerald-400" aria-hidden="true"></i>
+                <span>Escrow.com • SSL secure • 1–3 day transfer</span>
+              </div>
+            </div>
           </div>
 
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <AcquisitionCTA label="Inquire to Acquire" variant="accent" icon="fa-arrow-right-long" />
-            <a href="#reality" class="px-8 py-4 border border-white/30 hover:bg-white/5 active:bg-white/10 transition-all font-semibold text-lg rounded-3xl flex items-center justify-center gap-x-2 w-full sm:w-auto text-white no-underline">
+          <div class="hero-animate-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <AcquisitionCTA label="Buy Now — $27,500" variant="accent" icon="fa-bolt" track="hero-buy-now" />
+            <AcquisitionCTA label="Make Offer" variant="outline" icon="fa-handshake" track="hero-make-offer" href={MAKE_OFFER_MAILTO} />
+            <a href="#reality" class="px-8 py-4 min-h-[48px] border border-white/30 hover:bg-white/5 active:bg-white/10 transition-all font-semibold text-lg rounded-3xl flex items-center justify-center gap-x-2 w-full sm:w-auto text-white no-underline">
               <span>Discover the Vision</span>
             </a>
           </div>
 
-          <div class="mt-10 flex items-center gap-x-8 text-sm">
+          <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm">
             <div class="flex items-center gap-x-2 text-slate-400">
-              <i class="fa-solid fa-check text-emerald-400"></i>
+              <i class="fa-solid fa-check text-emerald-400" aria-hidden="true"></i>
               <span>Premium brand asset</span>
             </div>
             <div class="flex items-center gap-x-2 text-slate-400">
-              <i class="fa-solid fa-check text-emerald-400"></i>
+              <i class="fa-solid fa-check text-emerald-400" aria-hidden="true"></i>
               <span>Cultural inflection point</span>
             </div>
+            <div class="flex items-center gap-x-2 text-slate-400">
+              <i class="fa-solid fa-check text-emerald-400" aria-hidden="true"></i>
+              <a href="#proof" class="underline underline-offset-4 hover:text-white">See comparables</a>
+            </div>
           </div>
+        </div>
+        <DomainMockup />
         </div>
       </div>
 
@@ -92,7 +113,7 @@ const reasons = (await getCollection('reasons')).sort(
     </div>
 
     <!-- THE NEW CREATIVE REALITY -->
-    <section id="reality" class="max-w-screen-2xl mx-auto px-8 pt-20 pb-16">
+    <section id="reality" class="reveal max-w-screen-2xl mx-auto px-8 pt-20 pb-16">
       <div class="max-w-4xl mx-auto">
         <div class="inline-block px-4 py-1 rounded-3xl bg-cyan-500/10 text-cyan-400 text-xs font-bold tracking-[2px] mb-6">THE NEW CREATIVE REALITY</div>
         <h2 class="section-header tracking-[-2.5px] mb-8">Geography is no longer<br />a creative constraint.</h2>
@@ -159,7 +180,7 @@ const reasons = (await getCollection('reasons')).sort(
     </section>
 
     <!-- WHY THIS DOMAIN COMMANDS PREMIUM VALUE -->
-    <section id="why" class="max-w-screen-2xl mx-auto px-8 pt-20 pb-16">
+    <section id="why" class="reveal max-w-screen-2xl mx-auto px-8 pt-20 pb-16">
       <div class="max-w-3xl mx-auto text-center mb-14">
         <div class="inline-block px-4 py-1 rounded-3xl bg-cyan-500/10 text-cyan-400 text-xs font-bold tracking-[2px] mb-4">WHY THIS DOMAIN COMMANDS PREMIUM VALUE</div>
         <h2 class="section-header tracking-[-2.5px]">A strategic brand asset,<br />not a generic domain.</h2>
@@ -181,36 +202,50 @@ const reasons = (await getCollection('reasons')).sort(
       </div>
     </section>
 
-    <!-- IMAGINE WHAT YOU COULD BUILD -->
-    <section class="bg-slate-900 border-y border-slate-800 py-20">
+    <!-- IMAGINE WHAT YOU COULD BUILD (filterable portfolio) -->
+    <section id="build" class="reveal bg-slate-900 border-y border-slate-800 py-20">
       <div class="max-w-screen-2xl mx-auto px-8">
-        <div class="max-w-3xl mx-auto text-center mb-14">
+        <div class="max-w-3xl mx-auto text-center mb-10">
           <div class="inline-block px-4 py-1 rounded-3xl bg-purple-500/10 text-purple-400 text-xs font-bold tracking-[2px] mb-4">IMAGINE WHAT YOU COULD BUILD</div>
           <h2 class="section-header tracking-[-2.5px]">{SITE.name}<br />as the flagship for:</h2>
+          <!-- Category filter (progressive enhancement) -->
+          <div class="mt-8 flex flex-wrap justify-center gap-2" role="group" aria-label="Filter use cases">
+            <button type="button" data-filter="all" class="filter-btn min-h-[48px] px-5 py-2 rounded-full text-sm font-semibold bg-cyan-500 text-white border-0 cursor-pointer">All</button>
+            <button type="button" data-filter="media" class="filter-btn min-h-[48px] px-5 py-2 rounded-full text-sm font-semibold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer hover:border-cyan-500/60">Media</button>
+            <button type="button" data-filter="business" class="filter-btn min-h-[48px] px-5 py-2 rounded-full text-sm font-semibold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer hover:border-cyan-500/60">Business</button>
+            <button type="button" data-filter="community" class="filter-btn min-h-[48px] px-5 py-2 rounded-full text-sm font-semibold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer hover:border-cyan-500/60">Community</button>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div id="use-case-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {
-            siteConfig.useCaseCategories.map((useCase, i) => (
-              <div class="use-case-card bg-slate-950 border border-slate-800 hover:border-cyan-500/60 rounded-3xl p-8 flex flex-col">
-                <div class="flex items-center gap-x-4 mb-5">
-                  <div class="w-11 h-11 rounded-2xl vibrant-glow flex items-center justify-center flex-shrink-0">
-                    <span class="text-white font-bold text-lg">{i + 1}</span>
+            siteConfig.useCaseCategories.map((useCase, i) => {
+              const cat = i < 2 ? 'media' : i < 4 ? 'business' : 'community';
+              return (
+                <div class="use-case-card bg-slate-950 border border-slate-800 hover:border-cyan-500/60 rounded-3xl p-8 flex flex-col" data-cat={cat}>
+                  <div class="flex items-center gap-x-4 mb-5">
+                    <div class="w-11 h-11 rounded-2xl vibrant-glow flex items-center justify-center flex-shrink-0">
+                      <span class="text-white font-bold text-lg">{i + 1}</span>
+                    </div>
+                    <div>
+                      <div class="font-semibold text-lg tracking-tight">{useCase.title}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div class="font-semibold text-lg tracking-tight">{useCase.title}</div>
-                  </div>
+                  <p class="text-slate-400 flex-grow text-[15px] leading-relaxed">{useCase.description}</p>
                 </div>
-                <p class="text-slate-400 flex-grow text-[15px] leading-relaxed">{useCase.description}</p>
-              </div>
-            ))
+              );
+            })
           }
         </div>
+        <p class="mt-8 text-center text-sm text-slate-500">
+          Full breakdown: <a href="/valuation/" class="text-cyan-400 hover:text-cyan-300 underline underline-offset-4">valuation guide</a>
+          {' '}·{' '}<a href="/faq/" class="text-cyan-400 hover:text-cyan-300 underline underline-offset-4">buyer FAQ</a>
+        </p>
       </div>
     </section>
 
     <!-- THIS IS MORE THAN A DOMAIN -->
-    <section class="max-w-screen-2xl mx-auto px-8 py-20">
+    <section class="reveal max-w-screen-2xl mx-auto px-8 py-20">
       <div class="max-w-4xl mx-auto text-center">
         <div class="mx-auto mb-8 inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 border border-white/10">
           <i class="fa-solid fa-flag text-4xl vibrant-gradient"></i>
@@ -232,49 +267,57 @@ const reasons = (await getCollection('reasons')).sort(
       </div>
     </section>
 
+    <SocialProof />
+
+    <FaqSection />
+
     <!-- ACQUISITION SECTION -->
-    <section class="bg-slate-900 border-y border-slate-800 py-16">
+    <section id="acquire" class="reveal bg-slate-900 border-y border-slate-800 py-16">
       <div class="max-w-screen-2xl mx-auto px-8">
         <div class="max-w-4xl mx-auto">
           <div class="text-center mb-10">
-            <div class="inline-block px-5 py-1.5 rounded-3xl vibrant-glow text-white text-xs font-extrabold tracking-[1.5px] mb-4">ACQUISITION</div>
+            <div class="inline-block px-5 py-1.5 rounded-3xl vibrant-glow text-white text-xs font-extrabold tracking-[1.5px] mb-4">ACQUISITION • ONE PREMIUM ASSET</div>
             <h2 class="section-header tracking-[-2px]">Ready to claim the brand<br />of the unbound creator?</h2>
+            <p class="mt-4 text-slate-400">Single buyer. First committed funds via escrow secure it.</p>
           </div>
 
           <div class="bg-slate-950 border border-slate-700 rounded-3xl p-10 md:p-14">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-y-8">
               <div>
                 <div class="text-sm uppercase tracking-[3px] text-cyan-400 font-bold mb-2">Premium Strategic Asset</div>
-                <div class="flex items-baseline gap-x-2">
-                  <span class="text-5xl font-extrabold tabular-nums tracking-[-2px]">Price on Request</span>
+                <div class="flex items-baseline gap-x-3">
+                  <span class="text-5xl font-extrabold tabular-nums tracking-[-2px] text-white">{SITE.priceDisplay}</span>
+                  <span class="text-sm text-slate-400">USD</span>
                 </div>
-                <div class="text-sm text-slate-400 mt-1">One-time acquisition • Full ownership transfer</div>
+                <div class="text-sm text-slate-400 mt-1">One-time acquisition • Full ownership transfer • Escrow protected</div>
 
                 <div class="mt-6 text-sm max-w-xs">
                   <div class="flex items-center gap-x-2 text-emerald-400">
-                    <i class="fa-solid fa-check"></i>
-                    <span class="font-medium">Comparable premium brandable .com domains in emerging lifestyle + tech verticals command significant premiums</span>
+                    <i class="fa-solid fa-check" aria-hidden="true"></i>
+                    <span class="font-medium">Inside public range for comparable vivid brandable .coms ($10k–$85k)</span>
                   </div>
                 </div>
               </div>
 
-              <div class="lg:text-right">
-                <AcquisitionCTA label="Submit Acquisition Inquiry" variant="accent" icon="fa-arrow-right-long" />
-                <div class="mt-4 text-xs text-slate-400">Serious buyers only • Escrow protected</div>
+              <div class="lg:text-right flex flex-col gap-3 lg:items-end">
+                <AcquisitionCTA label="Buy Now — $27,500" variant="accent" icon="fa-bolt" track="acquire-buy-now" />
+                <AcquisitionCTA label="Make Offer" variant="outline" icon="fa-handshake" track="acquire-make-offer" href={MAKE_OFFER_MAILTO} />
+                <a href="/contact/" data-track="acquire-contact-agent" class="text-sm text-cyan-400 hover:text-cyan-300 underline underline-offset-4 min-h-[48px] inline-flex items-center lg:justify-end">Contact agent →</a>
+                <div class="text-xs text-slate-400">Serious buyers only • Escrow protected</div>
               </div>
             </div>
 
-            <div class="mt-10 pt-8 border-t border-slate-700 grid grid-cols-1 sm:grid-cols-3 gap-y-6 text-sm">
+            <div class="mt-10 pt-8 border-t border-slate-700 grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm">
               <div>
-                <div class="font-semibold mb-1 flex items-center gap-x-2"><i class="fa-solid fa-handshake text-cyan-400"></i> <span>Transaction</span></div>
-                <div class="text-slate-400">Handled via Escrow.com or your preferred platform. Full domain push + DNS control transfer.</div>
+                <div class="font-semibold mb-1 flex items-center gap-x-2"><i class="fa-solid fa-handshake text-cyan-400" aria-hidden="true"></i> <span>Transaction</span></div>
+                <div class="text-slate-400">Handled via Escrow.com or your preferred platform. Full domain push + DNS control transfer in 1–3 days.</div>
               </div>
               <div>
-                <div class="font-semibold mb-1 flex items-center gap-x-2"><i class="fa-solid fa-file-contract text-cyan-400"></i> <span>Confidential</span></div>
-                <div class="text-slate-400">All inquiries are handled confidentially. Pricing reflects brand strength, keyword alignment, cultural timing, versatility, and long-term appreciation potential.</div>
+                <div class="font-semibold mb-1 flex items-center gap-x-2"><i class="fa-solid fa-file-contract text-cyan-400" aria-hidden="true"></i> <span>Confidential</span></div>
+                <div class="text-slate-400">All inquiries confidential. Pricing reflects brand strength, keyword alignment, cultural timing, versatility, and appreciation potential.</div>
               </div>
               <div>
-                <div class="font-semibold mb-1 flex items-center gap-x-2"><i class="fa-solid fa-globe text-cyan-400"></i> <span>Why Now?</span></div>
+                <div class="font-semibold mb-1 flex items-center gap-x-2"><i class="fa-solid fa-globe text-cyan-400" aria-hidden="true"></i> <span>Why Now?</span></div>
                 <div class="text-slate-400">The brands that claim clear, ownable language around the Starlink × creator economy convergence now will hold mindshare for years.</div>
               </div>
             </div>
@@ -287,14 +330,56 @@ const reasons = (await getCollection('reasons')).sort(
     <div class="bg-gradient-to-b from-slate-900 to-slate-950 py-16">
       <div class="max-w-screen-2xl mx-auto px-8 text-center">
         <div class="max-w-lg mx-auto">
-          <h3 class="font-display text-5xl tracking-[-2px] font-extrabold mb-4">The studio<br />is now the planet.</h3>
-          <p class="text-xl text-slate-300 mb-8">Claim the name that defines the movement.</p>
+          <h2 class="font-display text-5xl tracking-[-2px] font-extrabold mb-4">The studio<br />is now the planet.</h2>
+          <p class="text-xl text-slate-300 mb-8">Claim the name that defines the movement — {SITE.priceDisplay} via escrow.</p>
 
-          <AcquisitionCTA label="Inquire to Acquire" variant="accent" />
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <AcquisitionCTA label="Buy Now" variant="accent" icon="fa-bolt" track="final-buy-now" />
+            <AcquisitionCTA label="Make Offer" variant="outline" icon="fa-handshake" track="final-make-offer" href={MAKE_OFFER_MAILTO} />
+          </div>
+          <p class="mt-6 text-sm text-slate-500">
+            <a href="/faq/" class="underline underline-offset-4 hover:text-slate-300">FAQ</a>
+            {' '}·{' '}<a href="/valuation/" class="underline underline-offset-4 hover:text-slate-300">Valuation</a>
+            {' '}·{' '}<a href="/contact/" class="underline underline-offset-4 hover:text-slate-300">Contact</a>
+          </p>
         </div>
       </div>
     </div>
   </main>
 
   <Footer disclaimer={siteConfig.disclaimer} />
+  <ExitIntent />
+
+  <script is:inline>
+    // Viewing counter (subtle urgency, session-based, no tracking)
+    (function () {
+      try {
+        var base = 14 + (new Date().getDate() % 9);
+        var els = document.querySelectorAll('[data-viewers]');
+        els.forEach(function (el) { el.textContent = String(base); });
+      } catch (e) {}
+    })();
+    // Use-case filter
+    (function () {
+      var btns = document.querySelectorAll('.filter-btn');
+      var cards = document.querySelectorAll('#use-case-grid [data-cat]');
+      if (!btns.length || !cards.length) return;
+      btns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var f = btn.getAttribute('data-filter');
+          btns.forEach(function (b) {
+            var active = b === btn;
+            b.classList.toggle('bg-cyan-500', active);
+            b.classList.toggle('text-white', active);
+            b.classList.toggle('bg-slate-800', !active);
+            b.classList.toggle('text-slate-300', !active);
+          });
+          cards.forEach(function (card) {
+            var show = f === 'all' || card.getAttribute('data-cat') === f;
+            card.style.display = show ? '' : 'none';
+          });
+        });
+      });
+    })();
+  </script>
 </BaseLayout>

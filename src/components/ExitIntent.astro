@@ -1,0 +1,81 @@
+---
+// Exit-intent email capture: shows once per session on desktop mouse-leave.
+// Free, dependency-free, respects reduced motion. Links to contact page.
+---
+
+<div
+  id="exit-intent"
+  class="fixed inset-0 z-[80] hidden items-center justify-center bg-slate-950/70 p-6 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="exit-intent-title"
+>
+  <div class="w-full max-w-md rounded-3xl border border-slate-700 bg-slate-900 p-8 text-center shadow-2xl">
+    <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400">
+      <i class="fa-solid fa-envelope-open-text text-xl" aria-hidden="true"></i>
+    </div>
+    <h2 id="exit-intent-title" class="font-display text-2xl font-bold tracking-tight text-white">
+      Before you go — get the acquisition brief
+    </h2>
+    <p class="mt-3 text-slate-400">
+      Pricing rationale, comparable sales &amp; transfer checklist for <span class="font-mono text-cyan-300">vibranttechnomad.com</span>.
+    </p>
+    <div class="mt-6 flex flex-col gap-3">
+      <a
+        href="/contact/"
+        data-track="exit-intent-brief"
+        class="inline-flex min-h-[48px] items-center justify-center rounded-3xl bg-gradient-to-r from-cyan-500 to-purple-500 px-6 py-3 font-semibold text-white no-underline hover:brightness-110"
+      >
+        Get the brief — $27,500 asking
+      </a>
+      <button
+        id="exit-intent-close"
+        type="button"
+        class="min-h-[48px] rounded-3xl border border-slate-700 px-6 py-3 text-sm font-semibold text-slate-400 hover:text-white bg-transparent cursor-pointer"
+      >
+        No thanks, keep exploring
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    try {
+      if (sessionStorage.getItem('vtn-exit-shown')) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var modal = document.getElementById('exit-intent');
+      var closeBtn = document.getElementById('exit-intent-close');
+      if (!modal || !closeBtn) return;
+      var shown = false;
+      var show = function () {
+        if (shown) return;
+        shown = true;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        try { sessionStorage.setItem('vtn-exit-shown', '1'); } catch (e) {}
+        document.removeEventListener('mouseout', onOut);
+      };
+      var hide = function () {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      };
+      var onOut = function (e) {
+        if (!e.relatedTarget && e.clientY <= 8) show();
+      };
+      // Desktop exit-intent only (mouse). Mobile: show after 75s dwell, once.
+      if (window.matchMedia('(pointer: fine)').matches) {
+        document.addEventListener('mouseout', onOut);
+      } else {
+        setTimeout(show, 75000);
+      }
+      closeBtn.addEventListener('click', hide);
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) hide();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') hide();
+      });
+    } catch (e) {}
+  })();
+</script>

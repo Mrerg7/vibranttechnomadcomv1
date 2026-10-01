@@ -1,0 +1,67 @@
+---
+import AcquisitionCTA from '../../components/AcquisitionCTA.astro';
+import Footer from '../../components/Footer.astro';
+import Nav from '../../components/Nav.astro';
+import { MAKE_OFFER_MAILTO, SITE } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const siteEntry = await getEntry('site', 'default');
+const disclaimer = siteEntry?.data.disclaimer ?? '';
+---
+
+<BaseLayout
+  title={`Valuation — Why ${SITE.name} Is Worth ${SITE.priceDisplay}`}
+  description={`Domain valuation guide for ${SITE.name}: brand strength, discoverability, versatility, timing, and comparable premium .com sales ($10k–$85k). Buy for $27,500 via escrow.`}
+>
+  <Nav />
+  <main id="main" class="pt-32 pb-20 max-w-4xl mx-auto px-8">
+    <p class="text-xs font-bold tracking-[2px] text-purple-400 uppercase">Valuation guide</p>
+    <h1 class="font-display text-4xl md:text-5xl font-extrabold tracking-tight mt-3">Why {SITE.name} supports {SITE.priceDisplay}</h1>
+    <p class="mt-4 text-lg text-slate-400 max-w-2xl">
+      Five value pillars plus public comparable ranges. Not financial advice — market context for a
+      one-of-one brandable .com at the Starlink × creator-economy inflection.
+    </p>
+
+    <div class="mt-10 grid md:grid-cols-2 gap-6">
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+        <h2 class="font-semibold text-xl text-cyan-400">1 · Instant authority</h2>
+        <p class="mt-2 text-slate-400">Zero explanation needed. Rhythmic, visual, sayable, spellable — recall that compounds with every mention.</p>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+        <h2 class="font-semibold text-xl text-purple-400">2 · Discoverability</h2>
+        <p class="mt-2 text-slate-400">Aligns with “techno nomad”, “digital nomad artist”, “Starlink creator”, “intermedia art” — rising intent, ownable head term.</p>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+        <h2 class="font-semibold text-xl text-orange-400">3 · Versatility</h2>
+        <p class="mt-2 text-slate-400">One name spans personal brand, publication, community, agency, courses, and commerce — six modeled flagships on the <a href="/#build" class="underline underline-offset-4 text-cyan-400">home page</a>.</p>
+      </div>
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+        <h2 class="font-semibold text-xl text-emerald-400">4 · Timing + 5 · Investment traits</h2>
+        <p class="mt-2 text-slate-400">Satellite broadband scales, creator economy matures, hybrid art goes mainstream. Descriptive + emotional .coms in growing verticals have the strongest resale history.</p>
+      </div>
+    </div>
+
+    <h2 class="font-display text-3xl font-bold tracking-tight mt-14">Comparable public ranges</h2>
+    <div class="mt-6 overflow-x-auto rounded-2xl border border-slate-800">
+      <table class="w-full text-left text-sm min-w-[520px]">
+        <thead class="bg-slate-900 text-slate-300">
+          <tr><th class="px-6 py-4">Segment</th><th class="px-6 py-4">Public range</th><th class="px-6 py-4">This asset</th></tr>
+        </thead>
+        <tbody class="text-slate-400">
+          <tr class="border-t border-slate-800"><td class="px-6 py-4">Nomad-adjacent brandable .coms</td><td class="px-6 py-4 font-mono text-cyan-300">$15k–$60k</td><td class="px-6 py-4">$27,500 inside range</td></tr>
+          <tr class="border-t border-slate-800"><td class="px-6 py-4">Creator-economy .coms</td><td class="px-6 py-4 font-mono text-cyan-300">$20k–$85k</td><td class="px-6 py-4">$27,500 inside range</td></tr>
+          <tr class="border-t border-slate-800"><td class="px-6 py-4">3-word vivid brandables</td><td class="px-6 py-4 font-mono text-cyan-300">$10k–$45k</td><td class="px-6 py-4">$27,500 inside range</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-sm text-slate-500">Ranges summarize publicly reported sales in adjacent segments; individual sales vary by timing, buyer, and terms.</p>
+
+    <div class="mt-10 flex flex-col sm:flex-row gap-4">
+      <AcquisitionCTA label="Buy Now — $27,500" variant="accent" icon="fa-bolt" track="valuation-buy-now" />
+      <AcquisitionCTA label="Make Offer" variant="outline" icon="fa-handshake" track="valuation-make-offer" href={MAKE_OFFER_MAILTO} />
+    </div>
+    <p class="mt-6 text-sm text-slate-500"><a href="/faq/" class="text-cyan-400 underline underline-offset-4">Buyer FAQ</a> · <a href="/contact/" class="text-cyan-400 underline underline-offset-4">Contact agent</a></p>
+  </main>
+  <Footer disclaimer={disclaimer} />
+</BaseLayout>

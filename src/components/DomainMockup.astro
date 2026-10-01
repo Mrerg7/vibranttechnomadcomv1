@@ -1,0 +1,38 @@
+---
+// Visual domain mockup: browser chrome + search-result preview.
+// Pure HTML/CSS (no images) — instant load, zero layout shift.
+import { SITE } from '../consts';
+---
+
+<div class="reveal mx-auto mt-12 max-w-2xl" aria-label="Preview of vibranttechnomad.com as a live brand">
+  <!-- Browser mockup -->
+  <div class="overflow-hidden rounded-2xl border border-slate-700 bg-slate-950 shadow-2xl shadow-cyan-500/10">
+    <div class="flex items-center gap-2 border-b border-slate-800 bg-slate-900 px-4 py-3">
+      <span class="h-3 w-3 rounded-full bg-red-500/80" aria-hidden="true"></span>
+      <span class="h-3 w-3 rounded-full bg-amber-500/80" aria-hidden="true"></span>
+      <span class="h-3 w-3 rounded-full bg-emerald-500/80" aria-hidden="true"></span>
+      <div class="ml-3 flex flex-1 items-center gap-2 rounded-full bg-slate-950 px-4 py-1.5 text-sm text-slate-300">
+        <i class="fa-solid fa-lock text-xs text-emerald-400" aria-hidden="true"></i>
+        <span class="font-mono">{SITE.name}</span>
+      </div>
+    </div>
+    <div class="p-8 text-center">
+      <p class="text-xs font-bold uppercase tracking-[3px] text-cyan-400">The flagship for unbound creators</p>
+      <p class="font-display mt-3 text-4xl font-extrabold tracking-tight text-white">
+        vibrant<span class="vibrant-gradient">techno</span>mad
+      </p>
+      <p class="mx-auto mt-3 max-w-md text-slate-400">Stories, gear, residencies &amp; drops from the planet-sized studio.</p>
+      <div class="mt-6 flex justify-center gap-3">
+        <span class="rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 px-5 py-2 text-sm font-semibold text-white">Explore stories</span>
+        <span class="rounded-full border border-slate-700 px-5 py-2 text-sm font-semibold text-slate-300">Join the circle</span>
+      </div>
+    </div>
+  </div>
+  <!-- Search preview -->
+  <div class="mt-4 rounded-2xl border border-slate-800 bg-slate-900/60 p-5 text-left">
+    <p class="text-xs text-slate-500">Google preview</p>
+    <p class="mt-1 text-sm text-slate-400">{SITE.url} ›</p>
+    <p class="text-lg text-sky-400">vibranttechnomad.com | Premium Domain for Sale</p>
+    <p class="mt-1 text-sm text-slate-400">$27,500 via secure escrow · Premium brandable .com for nomadic creators…</p>
+  </div>
+</div>

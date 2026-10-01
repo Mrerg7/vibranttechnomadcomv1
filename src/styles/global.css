@@ -1,22 +1,81 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* NOTE: Google Fonts loaded via <link preload> in SEO.astro — no @import (render-blocking). */
 
 @layer base {
   :root {
     --primary: #06b6d4;
     --accent: #a855f7;
+    color-scheme: dark;
+  }
+
+  :root.light {
+    color-scheme: light;
   }
 
   html {
     scroll-behavior: smooth;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
   body {
     @apply bg-slate-950 text-slate-200 antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    text-rendering: optimizeLegibility;
+  }
+
+  :root.light body {
+    @apply bg-white text-slate-800;
+  }
+
+  /* Accessible focus ring (keyboard users) */
+  :focus-visible {
+    outline: 3px solid #06b6d4;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Skip link */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -100px;
+    z-index: 100;
+    background: #06b6d4;
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* Enforce min 48px tap targets for interactive elements on touch */
+  @media (pointer: coarse) {
+    nav button,
+    nav a,
+    main a,
+    footer a,
+    button {
+      min-height: 48px;
+      min-width: 48px;
+    }
   }
 }
 
@@ -59,7 +118,18 @@
     background-image: linear-gradient(rgba(2, 6, 23, 0.65), rgba(2, 6, 23, 0.88)), url('https://imagedelivery.net/-sPAUAWeA405NiWJ0SNIQA/101630a5-991e-4322-449f-4aba66df9400/public');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+  }
+
+  /* background-attachment:fixed is a mobile perf killer + iOS jank — desktop only */
+  @media (min-width: 1024px) {
+    .hero-bg {
+      background-attachment: fixed;
+    }
+  }
+
+  /* Light-mode surface overrides (toggle adds .light on <html>) */
+  :root.light .hero-bg {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.94)), url('https://imagedelivery.net/-sPAUAWeA405NiWJ0SNIQA/101630a5-991e-4322-449f-4aba66df9400/public');
   }
 
   .reason-card {
@@ -88,5 +158,43 @@
 
   .stat-number {
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Scroll-reveal (progressive enhancement; .reveal.visible fades in) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Subtle fade-in for hero */
+  @keyframes hero-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .hero-animate {
+    animation: hero-fade-up 0.8s ease both;
+  }
+  .hero-animate-2 {
+    animation: hero-fade-up 0.8s 0.12s ease both;
+  }
+  .hero-animate-3 {
+    animation: hero-fade-up 0.8s 0.24s ease both;
   }
 }
